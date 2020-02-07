@@ -72,6 +72,23 @@ namespace PersonEditor.DataAccess
             }
         }
 
+        public static void PeopleAdd(int personTypeId, string firstName, string lastName, string phone, string email)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand pcmd = new SqlCommand("PersonAddEdit", connection);
+                pcmd.CommandType = CommandType.StoredProcedure;
+                pcmd.Parameters.AddWithValue("@PersonId", 0);
+                pcmd.Parameters.AddWithValue("@PersonTypeId", personTypeId);
+                pcmd.Parameters.AddWithValue("@FirstName", firstName);
+                pcmd.Parameters.AddWithValue("@LastName", lastName);
+                pcmd.Parameters.AddWithValue("@Phone", phone);
+                pcmd.Parameters.AddWithValue("@Email", email);
+                pcmd.ExecuteNonQuery();
+            }
+        }
+
         public static void PeopleAddEdit(System.Windows.Forms.DataGridViewRow dgvr)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
